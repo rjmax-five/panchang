@@ -38,6 +38,9 @@ header::before { content: ''; position: absolute; inset: -40% -20% auto; height:
 .nav .icon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--moon); }
 .nav .icon:hover { background: rgba(255,255,255,.08); }
 .nav .grow { flex: 1; }
+.nav .locsel { appearance: none; -webkit-appearance: none; height: 30px; max-width: 118px; padding: 0 22px 0 10px; border-radius: 999px; border: 1.5px solid currentColor; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23F6EBC8' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center; color: inherit; font: inherit; font-size: 13px; font-weight: 700; margin-right: 6px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; cursor: pointer; }
+.nav .locsel option { color: #222; background: #fff; }
+.jantri .nav .locsel { color: var(--red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23B4271C' stroke-width='1.6'/%3E%3C/svg%3E"); }
 .nav .lang { width: auto; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1.5px solid currentColor; height: 30px; margin-right: 6px; letter-spacing: .02em; }
 .jantri .nav .lang { color: var(--red); }
 .dev .nav .lang { font-family: var(--sans); }
@@ -293,6 +296,7 @@ select { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border
       <button class="icon" id="prev" aria-label="पिछला महीना"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <button class="icon" id="next" aria-label="अगला महीना"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       <span class="grow"></span>
+      <select class="locsel" id="locSel" aria-label="Location / स्थान"></select>
       <button class="icon lang" id="langBtn" aria-label="Language / भाषा"></button>
       <button class="icon" id="todayBtn" aria-label="आज"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18M8 2v4M16 2v4"/><circle cx="12" cy="16" r="1.6" fill="currentColor" stroke="none"/></svg></button>
       <button class="icon" id="gear" aria-label="सेटिंग्स"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
@@ -886,6 +890,9 @@ function render() {
   document.querySelector('meta[name=theme-color]').content = S.theme === 'modern' ? '#1B1F3B' : '#B4271C';
   $('#brand').textContent = dev() ? 'पंचांग' : 'Panchang';
   $('#langBtn').textContent = dev() ? 'English' : 'हिन्दी';
+  const ls = $('#locSel'), t = T_();
+  ls.innerHTML = CITIES.map(c => `<option value="${c.name}"${c.name === S.loc.name ? ' selected' : ''}>${dev() ? c.hi : c.name}</option>`).join('') +
+    `<option value="geo"${S.loc.name === 'My location' ? ' selected' : ''}>${S.loc.name === 'My location' ? (dev() ? 'मेरा स्थान' : 'My location') : t.geo}</option>`;
   T_().legend.forEach((t, i) => { $('#lg' + (i + 1)).textContent = t; });
   renderHeader(); renderGrid(); renderList();
 }
@@ -1095,6 +1102,7 @@ function init() {
   $('#prev').onclick = () => shiftMonth(-1);
   $('#next').onclick = () => shiftMonth(1);
   $('#todayBtn').onclick = goToday;
+  $('#locSel').onchange = e => { if (e.target.value === 'geo') { useGeo(); return; } S.loc = CITIES.find(c => c.name === e.target.value); save(); renderSettings(); render(); };
   $('#langBtn').onclick = () => { S.script = dev() ? 'en' : 'hi'; save(); renderSettings(); render(); };
   $('#grid').addEventListener('click', e => { const c = e.target.closest('.cell[data-d]'); if (c) openDetail(+c.dataset.d); });
   $('#list').addEventListener('click', e => { const c = e.target.closest('.row[data-d]'); if (c) openDetail(+c.dataset.d); });
