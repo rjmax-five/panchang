@@ -228,22 +228,26 @@ select { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border
 .wall .title h1 { color: var(--ink); font-family: var(--dev); font-weight: 800; font-size: 30px; margin-top: 10px; }
 .wall .title .sub { font-size: 13px; margin-top: 4px; }
 .wall .hero { border-bottom: 0; border-top: 1px solid var(--ink); padding-top: 8px; margin-top: 4px; }
-.wall .weekdays { display: none; }
+.wall .weekdays { display: grid; background: var(--red); border: 1.5px solid var(--ink); border-bottom: 0; }
+.wall .wd { display: flex; flex-direction: column; align-items: center; padding: 4px 0 5px; line-height: 1.1; }
+.wall .wd b { font-size: 12px; font-weight: 800; color: var(--paper); }
+.wall .wd small { font-size: 9px; font-weight: 600; color: rgba(244,236,214,.85); margin-top: 2px; }
+.wall .wd.sun b { color: #FFE8A3; }
 .wall #cal { padding: 4px 8px 6px; }
-.wall .grid { border: 1.5px solid var(--ink); gap: 1px; background: var(--ink); grid-auto-rows: minmax(92px, auto); grid-template-columns: 56px repeat(var(--weeks, 5), 1fr); }
+.wall .grid { border: 1.5px solid var(--ink); border-top: 0; gap: 1px; background: var(--ink); grid-auto-rows: minmax(88px, auto); grid-template-columns: repeat(7, 1fr); }
 .wall .wday { background: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4px 2px; line-height: 1.15; }
 .wall .wday b { font-size: 13px; font-weight: 800; }
 .wall .wday small { font-size: 10px; font-weight: 600; color: var(--muted); margin-top: 3px; }
 .wall .wday.sun b { color: var(--red); }
-.wall .cell { aspect-ratio: auto; padding: 3px 3px 3px; align-items: stretch; text-align: center; justify-content: space-between; min-width: 0; }
-.wall .cell .ct { font-size: 8.5px; line-height: 1.15; font-weight: 700; color: var(--ink); white-space: normal; text-align: left; display: block; overflow: hidden; }
+.wall .cell { aspect-ratio: auto; padding: 3px 2px 3px; align-items: stretch; text-align: center; justify-content: space-between; min-width: 0; }
+.wall .cell .ct { font-size: 8px; line-height: 1.15; font-weight: 700; color: var(--ink); white-space: normal; text-align: left; display: block; overflow: hidden; }
 .wall .cell .ct em { font-style: normal; font-weight: 600; color: var(--muted); font-family: var(--sans); }
 .wall .cell .ct.ek { color: var(--red); }
 .wall .cell .ct.full { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 2px; }
-.wall .cell .num { font-size: 26px; line-height: 1; font-weight: 800; margin: 2px 0; width: auto; text-align: center; }
+.wall .cell .num { font-size: 22px; line-height: 1; font-weight: 800; margin: 2px 0; width: auto; text-align: center; }
 .wall .cell.sun .num, .wall .cell.holiday .num { color: var(--red); }
-.wall .cell .cn { font-size: 8.5px; color: var(--muted); font-weight: 600; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.wall .cell .cf { font-size: 8.5px; color: var(--red); font-weight: 700; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 10px; word-break: break-word; }
+.wall .cell .cn { font-size: 8px; color: var(--muted); font-weight: 600; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wall .cell .cf { font-size: 8px; color: var(--red); font-weight: 700; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 10px; word-break: break-word; }
 .wall .cell .cf.shr { color: var(--muted); font-weight: 600; }
 .wall .cell.today .num { color: var(--paper); }
 .wall .cell.today .num::before { inset: -3px -6px; }
@@ -263,8 +267,7 @@ select { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border
   .wall .title h1 { font-size: 38px; }
   .wall .brand { font-size: 36px; }
   .wall .grid { grid-auto-rows: minmax(140px, auto); }
-  .wall .grid { grid-template-columns: 96px repeat(var(--weeks, 5), 1fr); }
-  .wall .wday b { font-size: 18px; } .wall .wday small { font-size: 13px; }
+  .wall .wd b { font-size: 16px; } .wall .wd small { font-size: 12px; }
   .wall .cell { padding: 6px 8px; }
   .wall .cell .ct, .wall .cell .cn, .wall .cell .cf { font-size: 13px; }
   .wall .cell .num { font-size: 42px; }
@@ -574,7 +577,7 @@ const FEST = [
   { m: 6, t: 7, name: 'Durga Ashtami', dev: 'दुर्गा अष्टमी', kind: 'minor' },
   { m: 6, t: 8, name: 'Maha Navami', dev: 'महा नवमी', kind: 'minor' },
   { m: 6, t: 9, name: 'Dussehra', dev: 'दशहरा', kind: 'major', anchor: 'aparahna' },
-  { m: 6, t: 14, name: 'Sharad Purnima', dev: 'शरद पूर्णिमा', kind: 'minor' },
+  { m: 6, t: 14, name: 'Sharad Purnima (Kojagara)', dev: 'शरद पूर्णिमा (कोजागरी)', kind: 'minor', anchor: 'midnight' },
   { m: 6, t: 18, name: 'Karwa Chauth', dev: 'करवा चौथ', kind: 'minor' },
   { m: 6, t: 27, name: 'Dhanteras', dev: 'धनतेरस', kind: 'minor', anchor: 'pradosh' },
   { m: 6, t: 28, name: 'Naraka Chaturdashi', dev: 'नरक चतुर्दशी', kind: 'minor' },
@@ -639,6 +642,13 @@ function anchorsFor(p, next) {
     pradosh: jdFromMs(p.sunset + 3600000),
     midnight: jdFromMs((p.sunset + next.sunrise) / 2)
   };
+  const L = p.sunset - p.sunrise, mid = (p.sunset + next.sunrise) / 2;
+  const win = {
+    noon: [p.sunrise + 0.4 * L, p.sunrise + 0.6 * L],
+    aparahna: [p.sunrise + 0.6 * L, p.sunrise + 0.8 * L],
+    pradosh: [p.sunset, p.sunset + 144 * 60000],
+    midnight: [mid - 24 * 60000, mid + 24 * 60000]
+  };
   const out = {};
   for (const k in a) {
     const jd = a[k];
@@ -646,9 +656,18 @@ function anchorsFor(p, next) {
     // lunar month at the anchor: same as sunrise unless a new moon passed in between
     let masa = p.masaAmanta, adhik = p.adhik;
     if (t < p.tithi) { const lm = lunarMonth(jd); masa = lm.idx; adhik = lm.adhik; }
-    out[k] = { jd, t, masa, adhik };
+    out[k] = { jd, t, masa, adhik, win: win[k] };
   }
   return out;
+}
+// minutes during which tithi `T` prevails inside the window [w0, w1] (windows are short, so at most one crossing)
+function tithiOverlap(T, w0, w1) {
+  const j0 = jdFromMs(w0), j1 = jdFromMs(w1);
+  const t0 = Math.floor(elong(j0) / 12), t1 = Math.floor(elong(j1) / 12);
+  if (t0 === T && t1 === T) return (w1 - w0) / 60000;
+  if (t0 === T && t1 === (T + 1) % 30) { const c = crossing(elong, ((T + 1) % 30) * 12, j0, j1); return c ? (msFromJd(c) - w0) / 60000 : 0; }
+  if (t0 === (T + 29) % 30 && t1 === T) { const c = crossing(elong, T * 12, j0, j1); return c ? (w1 - msFromJd(c)) / 60000 : 0; }
+  return 0;
 }
 function getMonth(loc, y, m) {
   const key = `${loc.lat.toFixed(3)},${loc.lon.toFixed(3)},${loc.tz},${y},${m}`;
@@ -665,6 +684,25 @@ function getMonth(loc, y, m) {
   const monthOk = (f, a) => f.m === null || (!a.adhik && a.masa === f.m);
   for (const f of FEST) {
     const an = f.anchor || 'sunrise';
+    if (an !== 'sunrise') {
+      // Kaal rule: the festival falls on the day its tithi covers the most of the relevant window
+      // (madhyahna, aparahna, pradosh or nishita). Ties go to the first day.
+      let best = -1, bestMin = 0;
+      for (let i = 0; i < days.length - 2; i++) {
+        const p = days[i], A = p.anchors[an];
+        const mins = tithiOverlap(f.t, A.win[0], A.win[1]);
+        if (mins <= bestMin + 0.01) continue;
+        // month of the tithi as it stands inside the window (not of the day's sunrise)
+        const refMs = Math.floor(elong(jdFromMs(A.win[0])) / 12) === f.t ? A.win[0] : A.win[1];
+        const refT = Math.floor(elong(jdFromMs(refMs)) / 12);
+        let masa = p.masaAmanta, adhik = p.adhik;
+        if (refT < p.tithi) { const lm = lunarMonth(jdFromMs(refMs)); masa = lm.idx; adhik = lm.adhik; }
+        if (!monthOk(f, { masa, adhik })) continue;
+        best = i; bestMin = mins;
+      }
+      if (best >= 0) { days[best].festivals.push(f); continue; }
+      // no day has the tithi inside the window at all: fall through to the instant/kshaya rule
+    }
     let lastHit = -5;
     for (let i = 0; i < days.length - 2; i++) {
       const A = days[i].anchors[an], B = days[i + 1].anchors[an];
@@ -795,13 +833,13 @@ const STR = {
     locNote: 'तिथि, सूर्योदय और पर्वों की तिथियाँ इसी स्थान के लिए निकाली जाती हैं। भारत और ऑस्ट्रेलिया में कोई पर्व एक दिन के अंतर पर पड़ सकता है — दोनों अपने-अपने स्थान के लिए सही हैं।',
     trad: 'मास गणना', amanta: 'अमांत', purnimanta: 'पूर्णिमांत',
     tradNote: 'अमांत (दक्षिण, पश्चिम और पूर्व भारत) में मास अमावस्या को समाप्त होता है। पूर्णिमांत (उत्तर भारत) में पूर्णिमा को। इससे केवल मास का नाम बदलता है; पर्वों की तिथियाँ वही रहती हैं।',
-    theme: 'रूप', wall: 'दीवार जंत्री', jantri: 'सरल जंत्री', modern: 'आधुनिक', lang: 'भाषा', about: 'सूर्य और चंद्र की स्थिति आपके ही डिवाइस पर मीयस (Meeus) गणना-विधि और लाहिरी अयनांश से निकाली जाती है, इसलिए ऐप बिना इंटरनेट भी चलता है। पर्वों की तिथियाँ प्रचलित दृक् पंचांग नियमों पर आधारित हैं (जैसे दीपावली सूर्यास्त के बाद प्रवर्तमान अमावस्या को)। कुछ पर्व क्षेत्र और परंपरा के अनुसार भिन्न हो सकते हैं; संशय हो तो स्थानीय पंचांग देखें।',
+    theme: 'रूप', wall: 'दीवार जंत्री', jantri: 'सरल जंत्री', modern: 'आधुनिक', lang: 'भाषा', about: 'सूर्य और चंद्र की स्थिति आपके ही डिवाइस पर मीयस (Meeus) गणना-विधि और लाहिरी अयनांश से निकाली जाती है, इसलिए ऐप बिना इंटरनेट भी चलता है। पर्वों की तिथियाँ प्रचलित दृक् पंचांग नियमों पर आधारित हैं — जिस दिन तिथि मध्याह्न, अपराह्न, प्रदोष या निशीथ काल को अधिक व्यापे, वही दिन (जैसे गणेश चतुर्थी मध्याह्न-व्याप्ति से, दीपावली प्रदोष-व्याप्ति से)। इसी कारण भारत और सिडनी की तिथि कभी-कभी एक दिन अलग होती है। कुछ पर्व क्षेत्र और परंपरा के अनुसार भिन्न हो सकते हैं; संशय हो तो स्थानीय पंचांग देखें।',
     finding: 'आपका स्थान खोजा जा रहा है…', denied: 'स्थान की अनुमति नहीं मिली। कोई शहर चुनें।', noGeo: 'इस डिवाइस पर स्थान उपलब्ध नहीं है।', ayan: 'लाहिरी अयनांश' },
   en: { legend: ['Major festival', 'Festival', 'Purnima', 'Amavasya', 'Pitru Paksha'], settings: 'Settings', loc: 'Location', geo: 'Use my location',
     locNote: 'Tithi, sunrise and festival dates are worked out for this place. A festival can fall a day apart between India and Australia — both are correct for where you are.',
     trad: 'Month reckoning', amanta: 'Amanta', purnimanta: 'Purnimanta',
     tradNote: 'Amanta (South, West and East India) ends the month on the new moon. Purnimanta (North India) ends it on the full moon. Only the month name changes; festival dates are the same.',
-    theme: 'Look', wall: 'Wall jantri', jantri: 'Simple jantri', modern: 'Modern', lang: 'Language', about: 'Positions of the Sun and Moon are computed on your device using the Meeus algorithms with Lahiri ayanamsa, so the app works offline. Festival dates follow common Drik Panchang rules (for example Diwali on the amavasya prevailing after sunset). A few festivals vary by region or tradition; when in doubt, check a local panchang.',
+    theme: 'Look', wall: 'Wall jantri', jantri: 'Simple jantri', modern: 'Modern', lang: 'Language', about: 'Positions of the Sun and Moon are computed on your device using the Meeus algorithms with Lahiri ayanamsa, so the app works offline. Festival dates follow Drik Panchang rules: the day on which the tithi covers more of the relevant period — madhyahna for Ganesh Chaturthi, aparahna for Dussehra, pradosh for Diwali, nishita for Janmashtami — which is why India and Sydney sometimes differ by a day. A few festivals vary by region or tradition; when in doubt, check a local panchang.',
     finding: 'Finding your location…', denied: 'Location permission was denied. Pick a city instead.', noGeo: 'Location is not available on this device.', ayan: 'Lahiri ayanamsa' }
 };
 const T_ = () => STR[dev() ? 'hi' : 'en'];
@@ -877,34 +915,31 @@ function cellFest(p) {
 const WD_FULL_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 function renderWallGrid(days, t) {
   const { m } = S.view;
-  const first = days[0].wd, weeks = Math.ceil((first + days.length) / 7);
+  const first = days[0].wd;
+  $('#weekdays').innerHTML = [0, 1, 2, 3, 4, 5, 6].map(d =>
+    `<div class="wd${d === 0 ? ' sun' : ''}"><b>${dev() ? VAAR_DEV[d] : WD_FULL_EN[d]}</b><small>${dev() ? WD[d] : WD_DEV[d]}</small></div>`).join('');
   let html = '';
-  for (let d = 0; d < 7; d++) {
-    html += `<div class="wday${d === 0 ? ' sun' : ''}"><b>${dev() ? VAAR_DEV[d] : WD_FULL_EN[d]}</b><small>${dev() ? WD_FULL_EN[d] : VAAR_DEV[d]}</small></div>`;
-    for (let w = 0; w < weeks; w++) {
-      const idx = w * 7 + d - first;
-      const p = days[idx];
-      if (!p) { html += '<div class="cell empty"></div>'; continue; }
-      const isToday = p.y === t.y && p.m === t.m && p.d === t.d;
-      const isSel = S.sel && p.y === S.sel.y && p.m === S.sel.m && p.d === S.sel.d;
-      const major = p.festivals.some(f => f.kind === 'major');
-      const f = p.festivals.find(x => x.kind === 'major' || x.kind === 'minor') || p.festivals.find(x => x.kind === 'shraddh');
-      const ek = p.festivals.some(f => f.kind === 'ekadashi');
-      let fname = f ? L.fest(f).split(' · ')[0] : '';
-      if (f && f.kind === 'shraddh') fname = dev() ? 'श्राद्ध' : 'Shraddh';
-      const sank = p.sankranti !== undefined ? (dev() ? `${RASHI_DEV[p.sankranti]} संक्रांति` : `${RASHI[p.sankranti]} sankranti`) : '';
-      html += `<button class="cell${isToday ? ' today' : ''}${isSel ? ' sel' : ''}${p.wd === 0 ? ' sun' : ''}${major ? ' holiday' : ''}${p.adhik ? ' adhik' : ''}${p.pitru ? ' pitru' : ''}" data-d="${p.d}" aria-label="${p.d} ${Mo(m)}, ${L.tithi(p)}">
-        <span class="ct${ek ? ' ek' : ''}${p.tithi === 14 || p.tithi === 29 ? ' full' : ''}">${dev() ? p.tithiDev : MASA_SHORT_T[p.tithi]} <em>${fmtHM(p.tithiEnd, S.loc.tz)}</em></span>
-        <span class="num">${p.d}</span>
-        <span class="cn">${L.nak(p)}</span>
-        <span class="cf${f && f.kind === 'shraddh' ? ' shr' : ''}">${fname || sank}</span>
-      </button>`;
-    }
+  for (let i = 0; i < first; i++) html += '<div class="cell empty"></div>';
+  for (const p of days) {
+    const isToday = p.y === t.y && p.m === t.m && p.d === t.d;
+    const isSel = S.sel && p.y === S.sel.y && p.m === S.sel.m && p.d === S.sel.d;
+    const major = p.festivals.some(f => f.kind === 'major');
+    const f = p.festivals.find(x => x.kind === 'major' || x.kind === 'minor') || p.festivals.find(x => x.kind === 'shraddh');
+    const ek = p.festivals.some(f => f.kind === 'ekadashi');
+    let fname = f ? L.fest(f).split(' · ')[0] : '';
+    if (f && f.kind === 'shraddh') fname = dev() ? 'श्राद्ध' : 'Shraddh';
+    const sank = p.sankranti !== undefined ? (dev() ? `${RASHI_DEV[p.sankranti]} संक्रांति` : `${RASHI[p.sankranti]} sankranti`) : '';
+    html += `<button class="cell${isToday ? ' today' : ''}${isSel ? ' sel' : ''}${p.wd === 0 ? ' sun' : ''}${major ? ' holiday' : ''}${p.adhik ? ' adhik' : ''}${p.pitru ? ' pitru' : ''}" data-d="${p.d}" aria-label="${p.d} ${Mo(m)}, ${L.tithi(p)}">
+      <span class="ct${ek ? ' ek' : ''}${p.tithi === 14 || p.tithi === 29 ? ' full' : ''}">${dev() ? p.tithiDev : MASA_SHORT_T[p.tithi]} <em>${fmtHM(p.tithiEnd, S.loc.tz)}</em></span>
+      <span class="num">${p.d}</span>
+      <span class="cn">${L.nak(p)}</span>
+      <span class="cf${f && f.kind === 'shraddh' ? ' shr' : ''}">${fname || sank}</span>
+    </button>`;
   }
+  for (let i = first + days.length; i % 7 !== 0; i++) html += '<div class="cell empty"></div>';
   const g = $('#grid');
-  g.style.setProperty('--weeks', weeks); g.style.gridTemplateColumns = '';
+  g.style.removeProperty('--weeks');
   g.innerHTML = html;
-  $('#weekdays').innerHTML = '';
 }
 function renderGrid() {
   const { y, m } = S.view;
