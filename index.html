@@ -34,16 +34,20 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--marigold);
 /* ---- Header ---- */
 header { background: var(--night); color: var(--moon); padding: calc(env(safe-area-inset-top) + 14px) 18px 22px; position: relative; overflow: hidden; }
 header::before { content: ''; position: absolute; inset: -40% -20% auto; height: 120%; background: radial-gradient(60% 60% at 80% 10%, var(--night-2), transparent 70%); pointer-events: none; }
-.nav { display: flex; align-items: center; gap: 4px; position: relative; }
-.nav .icon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--moon); }
+.nav { display: flex; align-items: center; gap: 2px; position: relative; }
+.nav .icon { flex-shrink: 0; width: 36px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--moon); }
 .nav .icon:hover { background: rgba(255,255,255,.08); }
 .nav .grow { flex: 1; }
-.nav .locsel { appearance: none; -webkit-appearance: none; height: 30px; max-width: 118px; padding: 0 22px 0 10px; border-radius: 999px; border: 1.5px solid currentColor; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23F6EBC8' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center; color: inherit; font: inherit; font-size: 13px; font-weight: 700; margin-right: 6px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; cursor: pointer; }
+.nav .locsel { appearance: none; -webkit-appearance: none; height: 30px; max-width: 110px; min-width: 64px; flex: 0 1 auto; padding: 0 20px 0 9px; border-radius: 999px; border: 1.5px solid currentColor; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23F6EBC8' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center; color: inherit; font: inherit; font-size: 13px; font-weight: 700; margin-right: 6px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; cursor: pointer; }
 .nav .locsel option { color: #222; background: #fff; }
 .jantri .nav .locsel { color: var(--red); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23B4271C' stroke-width='1.6'/%3E%3C/svg%3E"); }
-.nav .lang { width: auto; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1.5px solid currentColor; height: 30px; margin-right: 6px; letter-spacing: .02em; }
-.jantri .nav .lang { color: var(--red); }
-.dev .nav .lang { font-family: var(--sans); }
+.nav .langseg { display: inline-flex; flex-shrink: 0; height: 30px; border: 1.5px solid currentColor; border-radius: 999px; overflow: hidden; margin-right: 6px; color: var(--moon); }
+.nav .langseg button { padding: 0 7px; font-size: 12px; font-weight: 700; color: inherit; opacity: .75; }
+.nav .langseg button.on { background: var(--moon); color: var(--night); opacity: 1; }
+.jantri .nav .langseg { color: var(--red); }
+.jantri .nav .langseg button.on { background: var(--red); color: var(--paper); }
+.nav .langseg button[data-v=hi] { font-family: var(--dev); }
+.nav .langseg button[data-v=en] { font-family: var(--sans); }
 .title { padding: 6px 0 0; position: relative; }
 .title h1 { font-family: var(--serif); font-weight: 500; font-size: 32px; line-height: 1.05; margin: 0; letter-spacing: -0.01em; font-variation-settings: 'opsz' 144; }
 .title .sub { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; font-size: 14px; color: rgba(246,235,200,.72); }
@@ -140,6 +144,17 @@ section.list h2 { font-family: var(--serif); font-weight: 500; font-size: 20px; 
 .kv .k { font-size: 11px; color: var(--muted); }
 .kv .v { font-size: 15px; font-weight: 500; margin-top: 2px; }
 .kv .v small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.chog-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.chog-title { font-family: var(--serif); font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.chog-row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-size: 12px; padding: 3px 6px; border-radius: 6px; margin-bottom: 2px; }
+.chog-name { font-weight: 600; }
+.chog-time { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.chog-row.good { background: rgba(60,140,80,.13); } .chog-row.good .chog-name { color: #2E7D46; }
+.chog-row.mid { background: rgba(242,169,59,.16); } .chog-row.mid .chog-name { color: #9A6B10; }
+.chog-row.bad { background: rgba(200,65,43,.10); } .chog-row.bad .chog-name { color: var(--sindoor); }
+.jantri .chog-row { border-radius: 0; } .jantri .chog-row.bad .chog-name { color: var(--red); }
+.jantri .chog-title { color: var(--red); font-weight: 700; border-bottom: 1px solid var(--red); }
+@media (max-width: 360px) { .chog-wrap { grid-template-columns: 1fr; } }
 .sheet-foot { font-size: 11px; color: var(--muted); margin: 16px 0 0; }
 
 /* ---- Settings ---- */
@@ -297,7 +312,7 @@ select { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; border
       <button class="icon" id="next" aria-label="अगला महीना"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       <span class="grow"></span>
       <select class="locsel" id="locSel" aria-label="Location / स्थान"></select>
-      <button class="icon lang" id="langBtn" aria-label="Language / भाषा"></button>
+      <div class="langseg" id="langSeg" role="group" aria-label="Language / भाषा"><button data-v="hi">हिन्दी</button><button data-v="en">English</button></div>
       <button class="icon" id="todayBtn" aria-label="आज"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18M8 2v4M16 2v4"/><circle cx="12" cy="16" r="1.6" fill="currentColor" stroke="none"/></svg></button>
       <button class="icon" id="gear" aria-label="सेटिंग्स"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     </div>
@@ -889,7 +904,7 @@ function render() {
   document.body.classList.toggle('wall', S.theme === 'wall');
   document.querySelector('meta[name=theme-color]').content = S.theme === 'modern' ? '#1B1F3B' : '#B4271C';
   $('#brand').textContent = dev() ? 'पंचांग' : 'Panchang';
-  $('#langBtn').textContent = dev() ? 'English' : 'हिन्दी';
+  document.querySelectorAll('#langSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === S.script));
   const ls = $('#locSel'), t = T_();
   ls.innerHTML = CITIES.map(c => `<option value="${c.name}"${c.name === S.loc.name ? ' selected' : ''}>${dev() ? c.hi : c.name}</option>`).join('') +
     `<option value="geo"${S.loc.name === 'My location' ? ' selected' : ''}>${S.loc.name === 'My location' ? (dev() ? 'मेरा स्थान' : 'My location') : t.geo}</option>`;
@@ -1015,6 +1030,23 @@ function festLabel(f, p) {
   return `${masa} ${paksha} ${dev() ? TITHI_DEV[f.t] : TITHI[f.t]}`;
 }
 // ================= Detail sheet =================
+const CHOG = { Udveg: ['Udveg', 'उद्वेग', 'bad'], Chal: ['Chal', 'चल', 'mid'], Labh: ['Labh', 'लाभ', 'good'], Amrit: ['Amrit', 'अमृत', 'good'], Kaal: ['Kaal', 'काल', 'bad'], Shubh: ['Shubh', 'शुभ', 'good'], Rog: ['Rog', 'रोग', 'bad'] };
+const CHOG_DAY = ['Udveg', 'Chal', 'Labh', 'Amrit', 'Kaal', 'Shubh', 'Rog'], CHOG_DAY_START = [0, 3, 6, 2, 5, 1, 4];
+const CHOG_NIGHT = ['Shubh', 'Amrit', 'Chal', 'Rog', 'Kaal', 'Labh', 'Udveg'], CHOG_NIGHT_START = [0, 2, 4, 6, 1, 3, 5];
+function nextDayOf(p) {
+  const days = getMonth(S.loc, p.y, p.m);
+  if (p.d < days.length) return days[p.d];
+  const y = p.m === 11 ? p.y + 1 : p.y, m = (p.m + 1) % 12;
+  return getMonth(S.loc, y, m)[0];
+}
+function choghadiya(p) {
+  const next = nextDayOf(p);
+  const mk = (from, to, cycle, start) => { const seg = (to - from) / 8, out = []; for (let i = 0; i < 8; i++) out.push({ name: cycle[(start + i) % 7], t0: from + seg * i, t1: from + seg * (i + 1) }); return out; };
+  return { day: mk(p.sunrise, p.sunset, CHOG_DAY, CHOG_DAY_START[p.wd]), night: mk(p.sunset, next.sunrise, CHOG_NIGHT, CHOG_NIGHT_START[p.wd]) };
+}
+function chogTable(list, tz, title) {
+  return `<div class="chog"><div class="chog-title">${title}</div>${list.map(c => { const [en, hi, q] = CHOG[c.name]; return `<div class="chog-row ${q}"><span class="chog-name">${dev() ? hi : en}</span><span class="chog-time">${fmtTime(c.t0, tz)} – ${fmtTime(c.t1, tz)}</span></div>`; }).join('')}</div>`;
+}
 function rahuKaal(p) {
   const seg = (p.sunset - p.sunrise) / 8, i = RAHU_SEG[p.wd];
   return [p.sunrise + seg * i, p.sunrise + seg * (i + 1)];
@@ -1051,6 +1083,7 @@ function openDetail(d) {
       ${row(T ? 'राहु काल' : 'Rahu kaal', `${fmtTime(r0, tz)} – ${fmtTime(r1, tz)}`)}
       ${row(T ? 'सूर्य राशि' : 'Sun sign', L.rashi(p.sunRashi))}
     </div>
+    <div class="chog-wrap">${(() => { const c = choghadiya(p); return chogTable(c.day, tz, T ? 'दिन का चौघड़िया' : 'Day choghadiya') + chogTable(c.night, tz, T ? 'रात का चौघड़िया' : 'Night choghadiya'); })()}</div>
     <p class="sheet-foot">${locName()} · ${S.tradition === 'amanta' ? T_().amanta : T_().purnimanta} · ${T_().ayan}</p>`;
   $('#sheet').classList.add('open'); $('#scrim').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1103,7 +1136,7 @@ function init() {
   $('#next').onclick = () => shiftMonth(1);
   $('#todayBtn').onclick = goToday;
   $('#locSel').onchange = e => { if (e.target.value === 'geo') { useGeo(); return; } S.loc = CITIES.find(c => c.name === e.target.value); save(); renderSettings(); render(); };
-  $('#langBtn').onclick = () => { S.script = dev() ? 'en' : 'hi'; save(); renderSettings(); render(); };
+  $('#langSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.script = b.dataset.v; save(); renderSettings(); render(); };
   $('#grid').addEventListener('click', e => { const c = e.target.closest('.cell[data-d]'); if (c) openDetail(+c.dataset.d); });
   $('#list').addEventListener('click', e => { const c = e.target.closest('.row[data-d]'); if (c) openDetail(+c.dataset.d); });
   $('#scrim').onclick = closeSheets;
